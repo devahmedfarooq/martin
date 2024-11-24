@@ -1,0 +1,53 @@
+{
+    "app": {
+        "title": "Produits",
+        "description": "Produits Description",
+        "marketing_angle": "Angle de commercialisation",
+        "product_title": "Politiques juridiques",
+        "faqs": "Produits FAQs",
+        "reviews": "Produits Avis",
+        "after_sale": "Après-vente",
+        "successfull_rate": "Taux de réussite",
+        "influencer_breif": "Brief d'influenceur",
+        "email_marketing": "Marketing par e-mail",
+        "regenrate": "Régénérer",
+        "logout": "Déconnexion",
+        "images" : "Images"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "username": "Nom d'utilisateur",
+        "email": "E-mail",
+        "password": "Mot de passe",
+        "save": "Sauvegarder",
+        "usernamePlaceholder": "Entrez le nom d'utilisateur",
+        "passwordPlaceholder": "Entrez le mot de passe",
+        "emailPlaceholder": "Entrez votre e-mail"
+    },
+    "addproductwidget": {
+        "title": "Produits",
+        "coa": "Nouveaux produits",
+        "products": "Produits",
+        "generation": "Générations",
+        "popup": {
+            "title": "Générer un produit",
+            "name": "Nom du produit ",
+            "description": "Description du produit ",
+            "amazonPage": "Page Amazon du produit ",
+            "language": "Langue du produit",
+            "generate": "Générer"
+        }
+    },
+    "list": {
+        "noProducts": "Veuillez ajouter un produit à voir ici !",
+        "seemore": "voir plus"
+    },
+    "product": {
+        "coa": "Voir le produit sur Amazon"
+    },
+    "layout" : {
+        "en" : "Anglais",
+        "fr" : "Français",
+        "language" : "langue"
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "app": {
+        "title": "Products",
+        "description": "Product Description",
+        "marketing_angle": "Marketing Angle",
+        "product_title": "Legal Polices",
+        "faqs": "Product FAQs",
+        "reviews": "Product Reviews",
+        "after_sale": "After Sale Service Writing",
+        "successfull_rate": "Successfull rate",
+        "influencer_breif": "Influencer Brief",
+        "email_marketing": "Email Marketing",
+        "regenrate": "Regenrate",
+        "logout": "Logout",
+        "images" : "Images"
+    },
+    "settings": {
+        "title": "Settings",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "save": "Save",
+        "usernamePlaceholder": "Enter username",
+        "passwordPlaceholder": "Enter password",
+        "emailPlaceholder": "Enter your email"
+    },
+    "addproductwidget": {
+        "title": "Products",
+        "coa": "New Products",
+        "products": "Products",
+        "generation": "Generations",
+        "popup": {
+            "title": "Generate A Product",
+            "name": "Name of product",
+            "description": "Description of product ",
+            "amazonPage": "Amazon page of product ",
+            "language": "Language of product",
+            "generate": "Generate"
+        }
+    },
+    "list": {
+        "noProducts": "Please Add A Product To See Here!",
+        "seemore": "see more"
+    },
+    "product" : {
+        "coa" : "View product on Amazon"
+    },
+    "layout": {
+        "en" : "English",
+        "fr": "French",
+        "language": "language"
+    }
+}
