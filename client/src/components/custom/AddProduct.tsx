@@ -151,6 +151,7 @@ export default function AddProduct() {
                 setUrl(e.url)
                 setDescription(e.productTitle)
                 setTitle(e.productTitle)
+                navigate('/')
             }}>
                 <SelectTrigger className="w-[180px] border-none mb-16 mt-4 lg:my-4 bg-[#0f172a]">
                     <SelectValue placeholder="Choose A Product" />
