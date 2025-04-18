@@ -42,12 +42,29 @@ const dataSchema = new mongoose.Schema({
         default: []
     },
     images: {
-        type: [String],
-        default: [""]
+        type: [{
+            img: {
+                type: String,
+                default: ""
+            },
+            prompt: {
+                type: String,
+                default: ""
+            },
+            size: {
+                type: String,
+                default: ""
+            },
+        }],
+        default: []
     },
     user: {
         type: String,
         required: true
+    },
+    legal_policies: {
+        type: [String],
+        default: [""]
     },
     url: {
         type: String,

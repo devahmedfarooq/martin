@@ -1,10 +1,18 @@
 import Cheerio from "cheerio"
 import OpenAI from "openai";
-import axios from "axios";
 import showdown from "showdown";
-
+import cloudinary from 'cloudinary'
 import ProductModel from "../../../db/models/products.model.js"
 import UserModel from "../../../db/models/user.model.js"
+import ImageModel from '../../../db/models/images.model.js'
+
+
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "dzfwntfw7",
+    api_key: process.env.CLOUDINARY_API_KEY || "829143719124888",
+    api_secret: process.env.CLOUDINARY_API_SECRET || "7DAHUmv8z3HXcUQV2AEdZMI2mkc"
+})
+
 
 
 // Generate the product detail after getting the information from the url provided
@@ -24,7 +32,7 @@ const scrapperController = async (req, res) => {
         let product = await ProductModel.findOne({ user: req.user.id, url: url });
         console.log(regen)
 
-        if (product && !regen  && !product[item].length == 0) {
+        if (product && product[item] && !regen && product[item].length != 0) {
             return res.status(200).json(product);
         }
 
@@ -68,7 +76,8 @@ const scrapperController = async (req, res) => {
             email: [],
             images: [],
             productTitle: productTitle,
-            productDescription: productDescriptiom
+            productDescription: productDescriptiom,
+            legal_policies: []
 
         };
 
@@ -83,40 +92,47 @@ const scrapperController = async (req, res) => {
             if (item == 'images') {
                 let completion;
                 try {
-                 /*    completion = await openai.chat.completions.create({
+                    completion = await openai.chat.completions.create({
                         messages: [
                             { role: "system", content: `Give prompt to generate an fake image of the product with  description.` },
                             { role: "user", content: result.content }
                         ],
                         model: "gpt-4o-mini",
-                    }); */
+                    });
 
-                    const { data, status } = await axios.post(
-                        `https://api.astria.ai/tunes/1380781/prompts`,
-                        {
-                            text: `"sks dummy Easy One Touch 2 Wireless air vent and CD slot mount is a versatile and convenient solution for charging and mounting your smartphone in your vehicle. This mount features Qi wireless charging technology, allowing you to charge your compatible devices without the need for additional cables. With the patented Easy One Touch mechanism, you can securely mount your phone with just one hand. The mount is adjustable and can accommodate smartphones of various sizes. Choose between mounting options for your vehicle's air vent or CD slot. Experience a safer and more convenient driving experience with the iOttie Easy One Touch 2 Wireless mount."`,
-                            seed: Math.random() * 100000,
-                            inpaint_faces: true,
-                            callback: `${process.env.SERVER_URL}/api/generate/save_callback`,
-                            ar: "1:1",
-                            num_images: 1,
-                            super_resolution: true,
-                            face_correct: true,
-                            hires_fix: true,
-                            film_grain: true,
-                            negativePrompt: 'no person'
+                    const options = {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer sk-proj-EO8srdYN70SrNl4ADvXsT3BlbkFJLhX44CiiruceQR0gydVH"
                         },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${process.env.ASTRIA_API_KEY}`,
-                            },
+                        body: {
+                            "model": "dall-e-3",
+                            "prompt": completion.choices[0].message.content,
+                            "n": 1,
+                            "size": "1024x1024"
                         }
-                    )
+                    }
 
-                    console.log(data)
+                    try {
+                        const resp = await fetch("https://api.openai.com/v1/images/generations", options)
+
+                        const openAIResponse = resp.json()
+
+                        //  const uploadFile = await cloudinary.v2.uploader.upload(resp.data[0].url);
+
+
+                        console.log("Image Generated Data : ", openAIResponse.data[0].url)
+                    } catch (e) {
+                        console.log("ERROR IN IMAGE : ", e)
+                    }
+
+                    //console.log("URL: ", uploadFile.secure_url)
+
 
                 } catch (err) {
-                    throw new Error("Error generating content with OpenAI: " + err.message);
+                    console.error("Error details: ", err.response ? err.response.data : err.message); // Log the error content
+                    throw new Error("Error generating Images with Dalle 2 : " + err);
                 }
 
                 const htmlContent = converter.makeHtml(completion.choices[0].message.content);
@@ -142,7 +158,7 @@ const scrapperController = async (req, res) => {
 
         }
 
-        user.regenerations += 1
+        //    user.regenerations += 1
         await user.save()
 
 
@@ -176,7 +192,7 @@ const scrapperController = async (req, res) => {
 
 
 // Generate the product detail from the information
-const userInfoProductGeneratorController = async (req, res) => {
+/* const userInfoProductGeneratorController = async (req, res) => {
     let apiKey = process.env.OPENAI_APIKEY
     const openai = new OpenAI({ apiKey: apiKey });
     try {
@@ -202,99 +218,126 @@ const userInfoProductGeneratorController = async (req, res) => {
         console.log("Error : ", error.message)
         res.status(500).json({ msg: error.message })
     }
-}
+} */
 
 // Generate User Product Image
-const generateProductImageModel = async (req, res) => {
-    const { prompt, approvedImages } = req.body;
-    console.log("er")
 
-    try {
-        const aiData = await axios.post(
-            "https://api.astria.ai/tunes",
-            {
-                tune: {
-                    title: prompt.title
-                        ? prompt.title
-                        : String("a" + Math.random() * 1000000),
-                    name: prompt.name
-                        ? prompt.name
-                        : String("a" + Math.random() * 1000000),
-                    branch: prompt.branch,
-                    image_urls: approvedImages,
-                },
-            },
-            {
-                maxBodyLength: Infinity,
-                headers: {
-                    Authorization: `Bearer ${process.env.ASTRIA_API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        res.status(200).json(aiData.data);
-    } catch (error) {
-        console.log("### Error#Create-Tune --- \t", error.message);
-        return res.status(500).json({ msg: error.message });
-    }
-}
 
 const generateProdutImage = async (req, res) => {
-    const { prompt, negativePrompt } = req.body;
-    const { id } = req.params;
     try {
 
+        const openai = new OpenAI({ apiKey: "sk-proj-EO8srdYN70SrNl4ADvXsT3BlbkFJLhX44CiiruceQR0gydVH" });
 
-        const { data, status } = await axios.post(
-            `https://api.astria.ai/tunes/${id}/prompts`,
-            {
-                text: `${prompt.text}`,
-                seed: Math.random() * 100000,
-                inpaint_faces: true,
-                callback: `${process.env.SERVER_URL}/api/generate/save_callback`,
-                ar: "1:1",
-                num_images: prompt.range <= 8 ? prompt.range : 1,
-                super_resolution: true,
-                face_correct: true,
-                hires_fix: true,
-                film_grain: true,
-                negativePrompt: negativePrompt
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.ASTRIA_API_KEY}`,
-                },
-            }
+        let product = await ImageModel.findOne(
+            { user: req.user.id }, // Query
+            { images: 1, user: 1 } // Projection
         );
 
-        res.status(200).json(data);
+        const user = await UserModel.findById(req.user.id).exec()
+
+
+
+
+        if (!product) {
+            product = await ImageModel.create({ images: [], user: req.user.id })
+        }
+
+        // Step 1: Generate a prompt using ChatGPT
+        const { img, prompt, size, name } = req.body
+        let fakeProduct = await openai.chat.completions.create({
+            messages: [
+                {
+                    role: "user",
+                    content: [{
+                        type: "text",
+                        text: "write a fake description of the product in a way that I will use it to genrate fake images of this product."
+                    }, {
+                        type: "image_url",
+                        image_url: {
+                            url: img
+                        }
+                    }]
+                }
+            ],
+            model: "gpt-4o-mini",
+        })
+
+        let fakeProductDescription = fakeProduct.choices[0].message.content
+
+
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.OPENAI_APIKEY}`, // Use environment variable
+            },
+            body: JSON.stringify({
+                model: "dall-e-3",
+                prompt: `Generate a highly realistic, 4K-quality image. 
+                Take inspiration from the user's input (below) but prioritize the AI-generated description for image generation. 
+                
+                User's Reference Prompt: ${prompt}
+                
+                AI-Prioritized Prompt (Primary Focus): ${fakeProductDescription}`,
+                n: 1,
+                size: size ? size : '1024x1024',
+            }),
+        };
+
+        try {
+            const resp = await fetch("https://api.openai.com/v1/images/generations", options);
+
+            if (!resp.ok) {
+                const errorDetails = await resp.json();
+                console.error("Error generating image: ", errorDetails);
+                return res.status(resp.status).json({ error: "Failed to generate image.", details: errorDetails });
+            }
+
+            const openAIResponse = await resp.json();
+            const imageUrl = openAIResponse.data[0]?.url;
+
+            if (!imageUrl) {
+                return res.status(500).json({ error: "Image URL not found in OpenAI response." });
+            }
+
+
+            try {
+
+
+                const data = await cloudinary.v2.uploader
+                    .upload(imageUrl)
+                //   data.secure_url
+                product.images.push({ img: data.secure_url, prompt, size, name })
+                await product.save()
+                user.regenerations += 1
+                await user.save()
+                return res.status(200).json({ img: data.secure_url });
+
+            } catch (err) {
+                console.error("Error in image upload to cloudinary: ", err);
+                return res.status(400).json({ error: "Error in image upload to cloudinary.", details: err.message });
+            }
+        } catch (e) {
+            console.error("Error in image generation: ", e.message);
+            return res.status(500).json({ error: "Failed to generate image.", details: e.message });
+        }
     } catch (error) {
-
-        console.log(error.response);
-        res.status(500).json({ msg: error.message });
-
+        console.error("Unexpected error: ", error.message);
+        res.status(500).json({ error: "An unexpected error occurred.", details: error.message });
     }
+};
 
-
-
-
-}
 
 
 const getProdutImage = async (req, res) => {
-    const { id } = req.params;
     try {
-        const { data, status } = await axios.get(
-            `https://api.astria.ai/tunes/${id}/prompts`,
-
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.ASTRIA_API_KEY}`,
-                },
-            }
-        );
-
-        res.status(200).json(data);
+        const data = await ImageModel.findOne({ user: req.user.id }, { _id: 0 }).exec()
+        if (!data) {
+            return res.status(200).json({ images: [], user: req.user.id })
+        }
+        return res.status(200).json(data.toObject({
+            versionKey: false
+        }));
     } catch (error) {
 
         console.log(error.response);
@@ -304,22 +347,7 @@ const getProdutImage = async (req, res) => {
 
 }
 
-const getImageGeneratorModel = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const { data } = await axios.get(`https://api.astria.ai/tunes/${id}`, {
-            headers: {
-                Authorization: `Bearer ${process.env.ASTRIA_API_KEY}`,
-            },
-        });
 
-
-        res.status(200).json(data);
-    } catch (error) {
-        console.log(error.message);
-        return res.status(500).json({ msg: error.message });
-    }
-}
 
 
 const getProducts = async (req, res) => {
@@ -348,10 +376,8 @@ const getProduct = async (req, res) => {
 
 export {
     scrapperController,
-    userInfoProductGeneratorController,
-    generateProductImageModel,
+    //  userInfoProductGeneratorController,
     generateProdutImage,
-    getImageGeneratorModel,
     getProdutImage,
     getProducts,
     getProduct

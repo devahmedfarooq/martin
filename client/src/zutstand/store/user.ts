@@ -5,7 +5,9 @@ interface User {
     email: String,
     username: String,
     product: number,
-    regenerations: number
+    regenerations: number,
+    totalProduct : number,
+    totalRegenerations : number
 }
 
 type Store = {
@@ -19,7 +21,9 @@ const useUser = create<Store>((set) => ({
         email: "",
         username: "",
         product: 0,
-        regenerations: 0
+        regenerations: 0,
+        totalProduct : 0,
+        totalRegenerations : 0
     },
     setUser: (u: User) => set((state) => {
         

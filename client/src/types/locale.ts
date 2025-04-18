@@ -4,7 +4,9 @@ type Locale = {
     addproductwidget: AddProductWidget,
     list: List,
     product: Product,
-    layout: Layout
+    layout: Layout,
+    image: Image,
+    actionButton: ActionButton
 }
 
 interface Product {
@@ -48,7 +50,8 @@ type AddProductWidget = {
     coa: string,
     products: string,
     generation: string,
-    popup: GenrateDialogPopUp
+    popup: GenrateDialogPopUp,
+    select: string
 }
 
 
@@ -65,6 +68,20 @@ interface Layout {
     en: string,
     fr: string,
     language: string
+}
+
+interface Image {
+    select: string,
+    coa: string,
+    generation: string,
+    generate: string
+}
+
+
+interface ActionButton {
+    download: string,
+    reset: string,
+    copy: string
 }
 
 export default Locale

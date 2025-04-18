@@ -16,19 +16,14 @@ import { useEffect, useState } from "react"
 
 export default function AddProduct() {
     const [listData, setListData] = useState([])
-    const { title, description, url, language, setLanguage, setUrl, setDescription, setTitle } = useStore()
+    const { title, description, url, language, setLanguage, setUrl, setDescription, setTitle, images, setImages } = useStore()
     const { user } = useUser()
     const { locale } = useLocale()
     const { setData } = useProductData()
-    const { setItem } = useItem()
-
-
+    const { setItem, item } = useItem()
 
 
     const navigate = useNavigate();
-
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +36,9 @@ export default function AddProduct() {
                 if (res.ok) {
                     const { data } = await res.json()
                     setListData(data)
-                    console.log("USER ", data)
+                    //  const { } = data
+                    //    setImages(data)
+                    console.log("Images ", data)
                 }
 
             } catch (error) {
@@ -52,12 +49,15 @@ export default function AddProduct() {
         fetchData()
     }, [])
 
-    return <Card className=" absolute z-0 lg:fixed right-5 top-28 lg:top-28  text-white w-[90vw] md:w-auto">
-        <CardHeader className="flex flex-row justify-between items-center">
-            <h1 className="text-2xl md:text-3xl font-black">{locale.addproductwidget.title}</h1>
-            <div className="flex flex-col justify-start gap-2">
+    const shouldRender = !window.location.pathname.includes('/setting');
+
+    return shouldRender && <Card className="scale-90 -translate-y-1 absolute z-0 lg:fixed right-5 text-center
+     top-24 lg:top-28  text-white w-[90vw] md:w-auto">
+        <CardHeader className="flex py-2 flex-row justify-between items-center">
+            {/*             <h1 className="text-2xl md:text-3xl font-black">{locale.addproductwidget.title}</h1>
+ */}            <div className="flex flex-col justify-start gap-2">
                 <div className="lg:hidden flex flex-col">
-                    <label>{locale.addproductwidget.generation}: {user.regenerations}/100</label>
+                    <label>{locale.addproductwidget.products}: {user.product}/100</label>
                 </div>
                 {/*                 <div className="lg:hidden flex flex-col  gap-2">
                     <label>Generations: {user.regenerations}/200</label>
@@ -66,16 +66,18 @@ export default function AddProduct() {
         </CardHeader>
 
         <CardContent>
-            <Dialog >
-                <DialogTrigger className="flex flex-row justify-around">
 
-                    <Button size={"lg"}>{locale.addproductwidget.coa} +</Button>
+            <h3 className="text-xl font-bold text-white my-3">Text</h3>
+            <Dialog >
+                <DialogTrigger className="flex w-full flex-row justify-around">
+
+                    <Button className="w-full" size={"lg"}>{locale.addproductwidget.coa} +</Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-[90vw]  bg-[#0f172a] lg:max-w-[600px]">
 
 
                     <div className="flex gap-4 flex-col items-center">
-                        <div className="flex w-96 flex-col gap-4">
+                        <div className="flex lg:w-96 flex-col gap-4">
                             <label className="text-lg text-center md:text-2xl font-bold text-white">
                                 {locale.addproductwidget.popup.name}
                             </label>
@@ -86,7 +88,7 @@ export default function AddProduct() {
                             />
                         </div>
 
-                        <div className="flex w-96 flex-col gap-4">
+                        <div className="flex lg:w-96 flex-col gap-4">
                             <label className="text-lg text-center md:text-2xl font-bold text-white">
                                 {locale.addproductwidget.popup.description}
                             </label>
@@ -97,7 +99,7 @@ export default function AddProduct() {
                             />
                         </div>
 
-                        <div className="flex w-96 flex-col gap-4">
+                        <div className="flex lg:w-96 flex-col gap-4">
                             <label className="text-lg text-center md:text-2xl font-bold text-white">
                                 {locale.addproductwidget.popup.amazonPage}
                             </label>
@@ -108,12 +110,12 @@ export default function AddProduct() {
                             />
                         </div>
 
-                        <div className="flex w-96 flex-col gap-4">
+                        <div className="flex lg:w-96 flex-col gap-4">
                             <label className="text-lg text-center md:text-2xl font-bold text-white">
                                 {locale.addproductwidget.popup.language}
                             </label>
                             <Select value={language} onValueChange={setLanguage}>
-                                <SelectTrigger className="w-96 text-white md:w-[180px]">
+                                <SelectTrigger className="w-full text-white ">
                                     <SelectValue placeholder="English" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -151,10 +153,12 @@ export default function AddProduct() {
                 setUrl(e.url)
                 setDescription(e.productTitle)
                 setTitle(e.productTitle)
+                setItem("")
+                // setImages(e.images)
                 navigate('/')
             }}>
-                <SelectTrigger className="w-[180px] border-none mb-16 mt-4 lg:my-4 bg-[#0f172a]">
-                    <SelectValue placeholder="Choose A Product" />
+                <SelectTrigger className={ item !== 'images' && url  ? "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-white text-[#0f172a]" : "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-[#0f172a]"}>
+                    <SelectValue placeholder={locale.addproductwidget.select} />
                 </SelectTrigger>
                 <SelectContent>
                     {
@@ -165,18 +169,15 @@ export default function AddProduct() {
             </Select>
 
 
-
-
-
             <div className="hidden lg:flex flex-col my-4 gap-2">
-                <label>{locale.addproductwidget.products}: {user.product}/100</label>
-                <Progress value={user.product} max={100} />
+                <label>{locale.addproductwidget.products}: {user.product}/{user.totalProduct}</label>
+                <Progress value={user.product} max={user.totalProduct} />
             </div>
 
-            <div className="hidden lg:flex flex-col my-4 gap-2">
+            {/*   <div className="hidden lg:flex flex-col my-4 gap-2">
                 <label>{locale.addproductwidget.generation}: {user.regenerations}/200</label>
                 <Progress value={user.regenerations} max={200} />
-            </div>
+            </div> */}
         </CardContent>
     </Card>
 }

@@ -19,7 +19,9 @@ export default function LoadingBar() {
           style={{ width: `${progress}%` }}
           className="bg-gray-300 h-full transition-all duration-300 ease-out"
         ></div>
-        <p className="absolute w-full text-center top-1/2 -translate-y-1/2 font-semibold text-gray-100">
+        <p className="absolute w-full text-center top-1/2 -translate-y-1/2 font-semibold" style={{
+          color : progress > 50  ?  'black' : 'GrayText'
+        }}>
           {progress}%
         </p>
       </div>

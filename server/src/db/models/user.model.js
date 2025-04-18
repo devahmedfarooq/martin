@@ -31,9 +31,21 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    totalProduct : {
+        type: Number,
+        default: 0
+    },
+    totalRegenerations: {
+        type: Number,
+        default: 0
+    },
     language: {
         type: String,
         default: 'english'
+    },
+    stripeId: {
+        type: String,
+        default: ''
     }
 }, {
     timestamps: true,

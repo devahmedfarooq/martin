@@ -36,7 +36,8 @@
             "amazonPage": "Amazon page of product ",
             "language": "Language of product",
             "generate": "Generate"
-        }
+        },
+        "select" : "Choose a product"
     },
     "list": {
         "noProducts": "Please Add A Product To See Here!",
@@ -49,5 +50,16 @@
         "en" : "English",
         "fr": "French",
         "language": "language"
+    },
+    "image" : {
+        "select" : "Choose a product",
+        "coa": "New Products",
+        "generation": "Generations",
+        "generate" : "Generate"
+    },
+    "actionButton" : {
+        "download" : "Download",
+        "reset" : "Reset",
+        "copy" : "Copy"
     }
 }

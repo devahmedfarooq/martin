@@ -36,7 +36,8 @@
             "amazonPage": "Page Amazon du produit ",
             "language": "Langue du produit",
             "generate": "Générer"
-        }
+        },
+        "select" : "Choisissez un produit"
     },
     "list": {
         "noProducts": "Veuillez ajouter un produit à voir ici !",
@@ -49,5 +50,16 @@
         "en" : "Anglais",
         "fr" : "Français",
         "language" : "langue"
+    },
+    "image" : {
+        "select" : "Choisissez un produit",
+        "coa": "Nouveaux produits",
+        "generation": "Générations",
+        "generate" : "Générer"
+    },
+    "actionButton" : {
+        "download" : "Télécharger",
+        "reset" : "Réinitialiser",
+        "copy" : "Copie"
     }
 }
