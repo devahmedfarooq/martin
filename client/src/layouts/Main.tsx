@@ -35,7 +35,8 @@ function useQueryParams() {
 
 
 type Props = {
-    children: JSX.Element | JSX.Element[]
+    children: JSX.Element | JSX.Element[],
+    className : string
 
 }
 

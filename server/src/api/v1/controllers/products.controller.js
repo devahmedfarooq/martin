@@ -18,7 +18,7 @@ cloudinary.v2.config({
 // Generate the product detail after getting the information from the url provided
 const scrapperController = async (req, res) => {
     let apiKey = process.env.OPENAI_APIKEY;
-    let scraperAPIKEY = "76f30ef0eb9a12579cf4ff46fd900a86";
+    let scraperAPIKEY = "6e034eadd83df54d13f64a7fdbcf45fb";
     const openai = new OpenAI({ apiKey: apiKey });
 
     try {

@@ -78,7 +78,7 @@ export default function AddProduct() {
 
 
             <div className="hidden lg:flex flex-col my-4 gap-2">
-                <label>Products: {user.regenerations}/{user.totalRegenerations}</label>
+                <label>{locale.addproductwidget.products}: {user.regenerations}/{user.totalRegenerations}</label>
                 <Progress value={user.regenerations} max={user.totalRegenerations} />
             </div>
 
