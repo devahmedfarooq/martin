@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ type FormValues = z.infer<typeof formSchema>;
 export default function LoginPage() {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [savedToken, setToken] = useLocalStorage("token");
+  const [token, setToken] = useLocalStorage("token");
   const [showPassword, setShowPassword] = useState(false);
 
   // Login mutation
@@ -69,6 +69,10 @@ export default function LoginPage() {
       },
     });
   };
+
+  useEffect(() => {
+    console.log("TOKEN  ", token)
+  },[])
 
   return (
     <AuthLayout classname="flex p-4 justify-center flex-col gap-y-4">

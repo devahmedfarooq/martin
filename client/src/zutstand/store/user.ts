@@ -7,12 +7,12 @@ interface User {
     product: number,
     regenerations: number,
     totalProduct : number,
-    totalRegenerations : number
+    totalRegenerations? : number
 }
 
 type Store = {
     user: User,
-    setUser: (u: User) => void
+    setUser: (u: any) => void
 }
 
 const useUser = create<Store>((set) => ({
@@ -25,7 +25,7 @@ const useUser = create<Store>((set) => ({
         totalProduct : 0,
         totalRegenerations : 0
     },
-    setUser: (u: User) => set((state) => {
+    setUser: (u: any ) => set(() => {
         
         return ({ user: u })
     

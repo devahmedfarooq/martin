@@ -1,10 +1,7 @@
 
-interface TextFieldProps {
-    varient: string
-}
 
 
-export default function TextField(props: TextFieldProps) {
+export default function TextField() {
     return <div className="flex flex-col gap-1">
         <label className="text-2xl ">Email</label>
         <div className=" border-2 rounded-2xl px-2 py-3 border-solid border-[#818181]">

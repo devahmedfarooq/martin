@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "../ui/button";
 import useStore from "@/zutstand/store/store";
 import useItem from '@/zutstand/store/item'
@@ -95,31 +95,31 @@ const ButtonSection: React.FC<ButtonSectionProps> = ({
                 {
                     item || (checkIfEmpty(data) || loading) ? (<Button
                         className="px-4 py-2  text-white rounded-lg"
-                        onClick={() => item === 'images' ? setImage({ prompt: '', img: '', size: '' }) : setItem("")}
+                        onClick={() => item === 'images' ? setImage({ prompt: '', img: '', size: '', name: '' }) : setItem("")}
                     >
-                        {l.actionButton.reset}
+                {l.actionButton.reset}
 
-                    </Button>) : null
+            </Button>) : null
                 }
 
 
 
-                {/* Regenerate Button */}
-                {item || (checkIfEmpty(data) || loading) ? item === 'images' ? ("") : (
-                    <Button
-                        className="px-4 py-2  text-white rounded-lg "
-                        onClick={() => handleGetByURL(true)}
-                    >
-                        {locale.app.regenrate}
-                    </Button>
-                ) : null}
+            {/* Regenerate Button */}
+            {item || (checkIfEmpty(data) || loading) ? item === 'images' ? ("") : (
+                <Button
+                    className="px-4 py-2  text-white rounded-lg "
+                    onClick={() => handleGetByURL(true)}
+                >
+                    {locale.app.regenrate}
+                </Button>
+            ) : null}
 
 
 
 
 
 
-            </div>
+        </div>
         </div >
     );
 };

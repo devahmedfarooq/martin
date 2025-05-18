@@ -6,7 +6,7 @@ type Props = {
 }
 
 
-export default function AuthLayout({ children, classname }: Props) {
+export default function AuthLayout({ children }: Props) {
 
 
 

@@ -13,18 +13,17 @@ import { makePayment } from "@/api/api"
 import useUser from "@/zutstand/store/user"
 import useLocale from "@/zutstand/store/locale"
 import English from '@/locales/en.json'
-import French from "@/locales/fr.json"
 
 // Define the input type for the form
 type Inputs = {
-  username: string
-  email: string
-  password: string
+  username: String
+  email: String
+  password: String
 }
 
 export default function Setting() {
   const { user } = useUser()
-  const {locale, setLocale}  = useLocale() 
+  const {locale}  = useLocale() 
   // Pricing data with translations
 
 

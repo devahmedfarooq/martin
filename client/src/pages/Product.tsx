@@ -1,5 +1,4 @@
 import MainLayout from "@/layouts/Main";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProduct } from "@/services/queries";
 import { Button } from "@/components/ui/button";

@@ -2,7 +2,7 @@ import { Card, CardHeader, CardContent } from "../ui/card"
 import { Button } from "../ui/button"
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "../ui/select"
 import useItem from "@/zutstand/store/item"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useStore from "@/zutstand/store/store"
 import useUser from "@/zutstand/store/user"
 import { Progress } from "../ui/progress"
@@ -63,7 +63,7 @@ export default function AddProduct() {
             <Button onClick={() => setItem("images")} className="w-full" size={"lg"}>{locale.image.coa}+</Button>
             <Select /* disabled={item != 'images'} */ onValueChange={(e) => {
                 setImage(images[Number(e)]) 
-                setTitle(images[Number(e)].name)
+                setTitle(images[Number(e)].name!)
                 setItem("images")
             }} >
                 <SelectTrigger  className={ item == 'images'  ? "w-[180px] flex flex-row justify-center gap-1 border-none bg-white text-[#0f172a]" : "w-[180px] border-none flex flex-row justify-center gap-1 bg-[#0f172a]"} >

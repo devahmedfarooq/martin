@@ -1,8 +1,7 @@
 import axios from 'axios'
 import loginSchema from '@/models/login'
 import User from '@/types/user'
-import { useToast } from '@/hooks/use-toast'
-import { string } from 'zod'
+
 
 export interface ImageGenrate {
     img: string,

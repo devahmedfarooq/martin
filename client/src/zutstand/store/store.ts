@@ -5,7 +5,7 @@ interface Image {
     img: string,
     prompt: string,
     size: string,
-    name: string
+    name?: string
 }
 
 

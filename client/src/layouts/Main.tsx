@@ -35,8 +35,8 @@ function useQueryParams() {
 
 
 type Props = {
-    children: JSX.Element | JSX.Element[],
-    className : string
+    children?: JSX.Element | JSX.Element[],
+    className? : string
 
 }
 
@@ -45,7 +45,7 @@ type Props = {
 export default function MainLayout({ children, className }: Props) {
     const { setLocale, locale } = useLocale()
     const { setUser, user } = useUser()
-    const { isPending, data, isError } = useAuth(setUser)
+    const { isPending, data } = useAuth()
     const { toast } = useToast()
     const query = useQueryParams();
     const paymentStatus = query.get("payment");
@@ -56,14 +56,17 @@ export default function MainLayout({ children, className }: Props) {
             return -1
         }
         window.localStorage.removeItem("token")
-        setItem("")
-        navigate('/auth/login')
+       //   navigate('/auth/login')
         return 0
     }
 
 
 
     async function authUser() {
+
+
+
+
 
         try {
             const res = await fetch("http://localhost:4000/auth/", {
@@ -86,16 +89,23 @@ export default function MainLayout({ children, className }: Props) {
         }
     }
 
+    
+
+    
 
     useEffect(() => {
-        if (!user) {
-            setUser(data)
+   
+        if (!user && data && data.user) {
+            const user = data!.user
+            setUser(user)
         }
     }, [user, setUser, data]);
 
 
 
-    useEffect(() => authUser, [])
+    useEffect(() => {
+         authUser()
+    }, [])
 
     useEffect(() => {
         setupInterceptors(toast)

@@ -16,7 +16,7 @@ import { useEffect, useState } from "react"
 
 export default function AddProduct() {
     const [listData, setListData] = useState([])
-    const { title, description, url, language, setLanguage, setUrl, setDescription, setTitle, images, setImages } = useStore()
+    const { title, description, url, language, setLanguage, setUrl, setDescription, setTitle } = useStore()
     const { user } = useUser()
     const { locale } = useLocale()
     const { setData } = useProductData()
@@ -157,12 +157,12 @@ export default function AddProduct() {
                 // setImages(e.images)
                 navigate('/')
             }}>
-                <SelectTrigger className={ item !== 'images' && url  ? "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-white text-[#0f172a]" : "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-[#0f172a]"}>
+                <SelectTrigger className={item !== 'images' && url ? "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-white text-[#0f172a]" : "w-[180px] border-none flex flex-row justify-center gap-1  mt-4 lg:my-4 bg-[#0f172a]"}>
                     <SelectValue placeholder={locale.addproductwidget.select} />
                 </SelectTrigger>
                 <SelectContent>
                     {
-                        listData.map(item => <SelectItem value={item}>{item.productTitle}</SelectItem>
+                        listData.map((item:any) => <SelectItem value={item}>{item.productTitle}</SelectItem>
                         )
                     }
                 </SelectContent>

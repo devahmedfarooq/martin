@@ -46,7 +46,7 @@ function App() {
   const { locale } = useLocale()
   const [loading, setLoading] = useState<boolean>(false);
   const { title, description, url, language } = useStore()
-  const { setUser, user } = useUser()
+  const {  user } = useUser()
   const [data, setData] = useState<ProductData>({
     title: [],
     overview: [],
@@ -137,7 +137,7 @@ function App() {
       const result = await response.json();
       console.log("Data --> ", result)
       setData(result);
-      await authUser()
+      //await authUser()
     } catch (error) {
       //  console.log(error?.message);
     } finally {

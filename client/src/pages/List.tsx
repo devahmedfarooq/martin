@@ -36,7 +36,7 @@ export default function List() {
 
             <section className="flex flex-row my-4 justify-center lg:justify-start gap-3 items-start  flex-wrap">
                 {
-                    listData && listData.length == 0 ? <p className="text-white">{locale.list.noProducts}</p> : listData && listData.filter(e => e.productDescription && e.productTitle).map((e, i) => <Link to={'/product/' + e._id} className=" w-full lg:w-1/4">
+                    listData && listData.length == 0 ? <p className="text-white">{locale.list.noProducts}</p> : listData && listData.filter((e : {productDescription:string,productTitle:string, _id : string} ) => e.productDescription && e.productTitle).map((e : {productDescription:string,productTitle:string, _id : string} ) => <Link to={'/product/' + e._id} className=" w-full lg:w-1/4">
                         <Card className="bg-[#0a081e] text-white p-5">
                             <CardContent className="flex flex-col gap-4">
                                 <h3 className="font-bold">{e.productTitle}</h3>

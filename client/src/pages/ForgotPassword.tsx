@@ -1,21 +1,12 @@
 
 import AuthLayout from "@/layouts/Auth";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-interface Loading {
-    value: number,
-    state: boolean
-}
+
 
 export default function ForgotPasswordPage() {
 /*     const { toast } = useToast()
- */    const [loading, setLoading] = useState<Loading>({
-        value: 0,
-        state: false
-    })
+ */   
 
-    const navigate = useNavigate();
 
 
 /*     const form = useForm<z.infer<typeof formSchema>>({

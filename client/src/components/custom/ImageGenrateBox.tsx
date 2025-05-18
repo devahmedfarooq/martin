@@ -27,9 +27,9 @@ export default function ImageGenrateBox() {
     const { locale } = useLocale()
     const mutation = useImageGenrate()
 
-    const handleFileUpload = async (e) => {
+    const handleFileUpload = async (e:any) => {
 
-        function convertBlobToBase64(blob) {
+        function convertBlobToBase64(blob:Blob) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onloadend = () => resolve(reader.result);
@@ -39,12 +39,13 @@ export default function ImageGenrateBox() {
         }
         const file = await fetch(URL.createObjectURL(e.target.files[0])).then((res) => res.blob());
         const base64Data = await convertBlobToBase64(file);
-
-        setImage(base64Data)
+        if(base64Data) {
+            setImage(String(base64Data))
+        }
     }
 
     const handleFileGenrate = () => {
-        mutation.mutate({ img: image, prompt, size: size, name: name })
+        mutation.mutate({ img: image, prompt, size: size, name: name! })
     }
 
 
