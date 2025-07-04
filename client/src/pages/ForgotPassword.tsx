@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
 
             setLoading({ ...loading, state: true, value: 21 })
             const body = form.getValues()
-            const res = await fetch("http://localhost:4000/auth/login", {
+            const res = await fetch("https://server-delicate-glade-3069.fly.dev/auth/login", {
                 method: "POST",
                 body: JSON.stringify(body),
                 headers: { "Content-Type": "application/json" }

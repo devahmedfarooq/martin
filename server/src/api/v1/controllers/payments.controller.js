@@ -202,8 +202,8 @@ const handlePayment = async (req, res) => {
             ],
             customer: customerId,
             client_reference_id: String(id), // Ensure it's a valid string
-            success_url: `http://localhost:5173/?payment=success`,
-            cancel_url: `http://localhost:5173/?payment=cancel`,
+            success_url: `https://frolicking-chebakia-ace1b3.netlify.app/?payment=success`,
+            cancel_url: `https://frolicking-chebakia-ace1b3.netlify.app//?payment=cancel`,
         });
 
         return res.status(200).json({

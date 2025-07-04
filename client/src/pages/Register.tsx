@@ -61,7 +61,7 @@ export default function RegisterPage() {
       // Simulate API call progress
       setLoading({ state: true, value: 65 })
 
-      const res = await fetch("http://localhost:4000/auth/register", {
+      const res = await fetch("https://server-delicate-glade-3069.fly.dev/auth/register", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },

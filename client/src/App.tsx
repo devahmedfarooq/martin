@@ -83,7 +83,7 @@ function App() {
   /*   async function authUser() {
   
       try {
-        const res = await fetch("http://localhost:4000/auth/", {
+        const res = await fetch("https://server-delicate-glade-3069.fly.dev/auth/", {
           method: "GET",
           headers: { "authorization": String(window.localStorage.getItem("token")) }
         })
@@ -121,7 +121,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/products/url-info", {
+      const response = await fetch("https://server-delicate-glade-3069.fly.dev/products/url-info", {
         method: "POST",
         body: JSON.stringify({ url, language, item, regen, title, description }),
         headers: {

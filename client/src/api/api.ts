@@ -35,7 +35,7 @@ interface ResponseLogin {
 }
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: "https://server-delicate-glade-3069.fly.dev",
     headers: {
         "authorization": String(window.localStorage.getItem("token"))
     }

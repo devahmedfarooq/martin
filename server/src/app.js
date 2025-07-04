@@ -38,7 +38,7 @@ export default async function ExpressServer() {
         app.use("/products", authenticate, ProductsRouter)
         app.use("/payment", PaymentRouter)
         await Connection();
-        app.listen(4000, () => {
+        app.listen(process.env.PORT, () => {
             console.log("Server has been started\t" + process.env.URL + ":" + process.env.PORT)
         })
     } catch (error) {

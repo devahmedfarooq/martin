@@ -69,7 +69,7 @@ export default function MainLayout({ children, className }: Props) {
 
 
         try {
-            const res = await fetch("http://localhost:4000/auth/", {
+            const res = await fetch("https://server-delicate-glade-3069.fly.dev/auth/", {
                 method: "GET",
                 headers: { "authorization": String(window.localStorage.getItem("token")) }
             })

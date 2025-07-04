@@ -19,7 +19,7 @@ export default function AddProduct() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch("http://localhost:4000/products/get-product-image", {
+                const res = await fetch("https://server-delicate-glade-3069.fly.dev/products/get-product-image", {
                     method: "GET",
                     headers: { "authorization": String(window.localStorage.getItem("token")) }
                 })
